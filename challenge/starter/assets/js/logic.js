@@ -7,39 +7,50 @@
 // When the game ends, it should display their score and give the user the ability to save their initials and their score
 
 // Prepare the questions in question.js file
-// var questions = ...
+var questions = localStorage.getItem('questions')
 var score = 0;
 var currentQuestion = 0;
 var counter;
 var timer;
+var correct = new Audio('./assets/sfx/correct.wav');
+var incorrect = new Audio('./assets/sfx/incorrect.wav');
 
 // Prepare all selector that we might need to point to the html element
 var startButton = document.querySelector('#start');
-// startScreenElement
-// questionsContainer
-// questionsTitle
-// choicesContainer
-// timerContainer
+var startScreenElement = document.querySelector('#start-screen')
+
+var questions = localStorage.getItem("questions")
+questions = JSON.parse(questions)
+
+var questionsContainer = document.querySelector("#questions")
+var questionTitle = document.querySelector("#question-title")
+var choicesContainer = document.querySelector("#choices")
+var timerContainer = document.querySelector("#time")
+var finalScore = document.getElementById('#final-score')
+var initialInput = document.getElementById('#initials')
+var submitContainer = document.getElementById("#submit")
 // ....
 
 function populateQuestion(question) {
-    var question = question.title;
+    var question_val = question.title;
     var choices = question.choices;
+    console.log(question)
+    console.log(choices)
 
     choicesContainer.innerHTML = '';
-    // questionTitle.textContent = question;
+    questionTitle.textContent = question_val;
     var choicesList = document.createElement('ul');
     for (let i = 0; i < choices.length; i++) {
         var choice = document.createElement('li');
         choice.textContent = choices[i];
         choicesList.appendChild(choice);
     }
-    // choicesContainer.appendChild(choicesList)
+     choicesContainer.appendChild(choicesList)
 }
 
 function endGame() {
     // When the game ends, it should display their score and give the user the ability to save their initials and their score
-
+    finalScore.textContent = score
     // hide questions container
     // show endScreen container
     // assign score to finalScore container
@@ -62,6 +73,7 @@ startButton.addEventListener('click', function() {
     // show the first question
     currentQuestion = 0;
     populateQuestion(questions[currentQuestion]);
+
 
     counter = 100;
     timer = setInterval(function() {
@@ -86,8 +98,33 @@ function saveHighscore(initial) {
 //    Check answer
 //        if correct, add 1 to score, call nextQuestion()
 //        if wrong, remove 10 seconds from the interval, call nextQuestion()
+   
+    var liElement = choicesContainer.children[0].children
+    console.log(liElement)
 
+    choicesContainer.addEventListener('click', function(event){
+    for(var i = 0; i < liElement.length; i++)
+    
+    var answer = event.currentTarget
+    var question = questions[currentQuestion]    
+
+
+    var questionAnswer = question.answer
+    console.log(questionAnswer)
+        if (answer === questionAnswer && answer === liElement[i]) {
+            score++;
+            correct.play();
+            nextQuestion()
+        } else {
+            score--;
+            incorrect.play();
+            nextQuestion();
+        }
+    })
 // Click event listener to submit button
-//    var initial = initialInput.value.trim()
-//    saveHighscore(initial)
+submitContainer.addEventListener('click', function(){
+    var initial = initialInput.value.trim()
+   saveHighscore(initial)
 //    redirect to highscore page
+})
+   
