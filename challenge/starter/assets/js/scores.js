@@ -30,5 +30,5 @@ clearContainer.addEventListener('click', function(){
     highScore = []
     JSON.stringify(highScore)
     localStorage.setItem("highScore", highScore)
-    display()
+    window.location.href = "highscores.html"
 })
