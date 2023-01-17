@@ -32,7 +32,7 @@ Create a code quiz that contains the following requirements:
 
 ## Link to final Application
 
-A link to the application can be found [here:](https://ope079.github.io/Code-Quiz/)
+A link to the application can be found [here....](https://ope079.github.io/Code-Quiz/)
 
 ---
 © 2022 Opeoluwa Orekoya. All Rights Reserved.
