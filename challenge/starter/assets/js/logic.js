@@ -76,7 +76,7 @@ startButton.addEventListener('click', function() {
     populateQuestion(questions[currentQuestion]);
 
 
-    counter = 100;
+    counter = 15;
     timer = setInterval(function() {
         counter--;
         timerContainer.textContent = counter
