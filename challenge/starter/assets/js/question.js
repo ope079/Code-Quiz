@@ -15,6 +15,11 @@ questions = [
         choices: ["getElementById", "getElementByClassName", "getElementById and getElementByClassName", "None of the above"],
         answer: "getElementById and getElementByClassName"
     },
+    {
+        title: " Upon encountering empty statements, what does the Javascript Interpreter do?",
+        choices: ["throws an error", "ignores statements", "gives a warning", "None of the above"],
+        answer: "ignores statements"
+    },
 ]
 
 questions = JSON.stringify(questions)
