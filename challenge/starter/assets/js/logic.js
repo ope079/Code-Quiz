@@ -35,6 +35,7 @@ var endScreenContainer = document.getElementById('end-screen')
 var highScore = []
 
 
+
 // ....
 
 function populateQuestion(question) {
@@ -99,7 +100,7 @@ function saveHighscore(initial) {
     highScore = localStorage.getItem("highScore")
     
 
-    if(highScore.length === 0){
+    if(highScore === null){
         highScore = []
         highScore.push({initials: initial, scores: score })
         highScore = JSON.stringify(highScore)
@@ -124,8 +125,7 @@ function saveHighscore(initial) {
 // Another click event listener for choices
 //    Check answer
 //        if correct, add 1 to score, call nextQuestion()
-//        if wrong, remove 10 seconds from the interval, call nextQuestion()
-   
+//        if wrong, remove 10 seconds from the interval, call nextQuestion()   
 choicesContainer.addEventListener('click', function(event){
     
     var answer = event.target.textContent
