@@ -92,7 +92,7 @@ function saveHighscore(initial) {
     highScore = localStorage.getItem("highScore")
     
 
-    if(highScore === null){
+    if(highScore === null || highScore === ''){
         highScore = []
         highScore.push({initials: initial, scores: score })
         highScore = JSON.stringify(highScore)
