@@ -140,6 +140,7 @@ choicesContainer.addEventListener('click', function(event){
             nextQuestion()
         } else {
             score--;
+            counter -= 10
             incorrect.play();
             nextQuestion();
         }
