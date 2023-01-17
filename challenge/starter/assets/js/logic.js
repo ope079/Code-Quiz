@@ -12,8 +12,8 @@ var score = 0;
 var currentQuestion = 0;
 var counter;
 var timer;
-var correct = new Audio('./assets/sfx/correct.wav');
-var incorrect = new Audio('./assets/sfx/incorrect.wav');
+var correct = new Audio('challenge/starter/assets/sfx/correct.wav');
+var incorrect = new Audio('challenge/starter/assets/sfx/incorrect.wav');
 
 // Prepare all selector that we might need to point to the html element
 var startButton = document.querySelector('#start');
@@ -26,16 +26,20 @@ var questionsContainer = document.querySelector("#questions")
 var questionTitle = document.querySelector("#question-title")
 var choicesContainer = document.querySelector("#choices")
 var timerContainer = document.querySelector("#time")
-var finalScore = document.getElementById('#final-score')
-var initialInput = document.getElementById('#initials')
-var submitContainer = document.getElementById("#submit")
+var finalScore = document.getElementById('final-score')
+var initialInput = document.getElementById('initials')
+var submitContainer = document.getElementById("submit")
+
+var endScreenContainer = document.getElementById('end-screen')
+
+var highScore = []
+
+
 // ....
 
 function populateQuestion(question) {
     var question_val = question.title;
     var choices = question.choices;
-    console.log(question)
-    console.log(choices)
 
     choicesContainer.innerHTML = '';
     questionTitle.textContent = question_val;
@@ -50,11 +54,15 @@ function populateQuestion(question) {
 
 function endGame() {
     // When the game ends, it should display their score and give the user the ability to save their initials and their score
-    finalScore.textContent = score
+    
     // hide questions container
+    questionsContainer.setAttribute('class', 'hide');
     // show endScreen container
+    endScreenContainer.setAttribute('class', 'visible')
     // assign score to finalScore container
+    finalScore.textContent = score
     // reset the timer clearInterval(timer);
+    clearInterval(timer)
 }
 
 function nextQuestion() {
@@ -78,9 +86,9 @@ startButton.addEventListener('click', function() {
     counter = 100;
     timer = setInterval(function() {
         counter--;
-        // set timerContainer text to counter
+        timerContainer.textContent = counter
         if (counter <= 0) {
-            // endGame()
+            endGame()
             clearInterval(timer);
         }
     }, 1000);
@@ -88,10 +96,29 @@ startButton.addEventListener('click', function() {
 
 function saveHighscore(initial) {
     // get the current highscores value from localstorage
+    highScore = localStorage.getItem("highScore")
+    
+
+    if(highScore.length === 0){
+        highScore = []
+        highScore.push({initials: initial, scores: score })
+        highScore = JSON.stringify(highScore)
+        localStorage.setItem("highScore", highScore)
+    }
+    else{
+    highScore = localStorage.getItem("highScore")
     // json parse current highscores from localstorage, this will be an array of object
+    
+    highScore = JSON.parse(highScore)
     // push initial + score to the array
+    highScore.push({initials: initial, scores: score })
+
+    highScore = JSON.stringify(highScore)
+    localStorage.setItem("highScore", highScore)
     // order the array from highest score to lowest
+    
     // json stringify then save back to localstorage
+    }
 }
 
 // Another click event listener for choices
@@ -99,19 +126,15 @@ function saveHighscore(initial) {
 //        if correct, add 1 to score, call nextQuestion()
 //        if wrong, remove 10 seconds from the interval, call nextQuestion()
    
-    var liElement = choicesContainer.children[0].children
-    console.log(liElement)
-
-    choicesContainer.addEventListener('click', function(event){
-    for(var i = 0; i < liElement.length; i++)
+choicesContainer.addEventListener('click', function(event){
     
-    var answer = event.currentTarget
+    var answer = event.target.textContent
+
     var question = questions[currentQuestion]    
 
-
     var questionAnswer = question.answer
-    console.log(questionAnswer)
-        if (answer === questionAnswer && answer === liElement[i]) {
+    
+        if (answer == questionAnswer) {
             score++;
             correct.play();
             nextQuestion()
@@ -121,10 +144,12 @@ function saveHighscore(initial) {
             nextQuestion();
         }
     })
+    
 // Click event listener to submit button
 submitContainer.addEventListener('click', function(){
     var initial = initialInput.value.trim()
    saveHighscore(initial)
 //    redirect to highscore page
+window.location.href = "highscores.html"
 })
    

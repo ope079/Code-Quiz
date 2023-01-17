@@ -13,7 +13,7 @@ questions = [
     {
         title: " Which of the following methods is used to access HTML elements using Javascript?",
         choices: ["getElementById", "getElementByClassName", "getElementById and getElementByClassName", "None of the above"],
-        answer: "var and let"
+        answer: "getElementById and getElementByClassName"
     },
 ]
 
