@@ -28,6 +28,8 @@ Create a code quiz that contains the following requirements:
 
   * When the game ends, it should display their score and give the user the ability to save their initials and their score
   
+## Image of final application
+![Screen capture image of the final application and how it looks ](./challenge/starter/assets/image/Capture.png)
 
 
 ## Link to final Application
