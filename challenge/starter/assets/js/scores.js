@@ -18,7 +18,7 @@ function display(){
     highScore.forEach(element => {
         var liVar = document.createElement("li")
         liVar.textContent = element.initials + " : " + element.scores 
-        console.log(liVar)
+        
         highScoresContainer.appendChild(liVar)
     });
     
